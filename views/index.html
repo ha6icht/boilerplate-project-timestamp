@@ -6,18 +6,18 @@
 	<title>Timestamp Microservice | freeCodeCamp.org</title>
 	<link rel="shortcut icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon-32x32.png" type="image/x-icon" />
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-	<link href="./style.css" rel="stylesheet" type="text/css">
+	<link href="./styles/style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 	<h1>Timestamp Microservice</h1>
 	<hr />
 	<div class="container">
-		<h3>Get Date in UNIX and UTC:</h3>
-    <form method="GET" action="/api/">
+		<h3>Get Date in UNIX or UTC:</h3>
+    <form>
       <label for="input-date" id="label-date"></label>
       <input type="date" name="date" id="input-date" required>
-      <input type="submit" value="Send">
+      <input type="submit" value="Send" id="submit-button">
     </form>
 		<!--<ul>
 			<li><a href="api/2015-12-25">[project url]/api/2015-12-25</a></li>
@@ -26,7 +26,7 @@
 
 		<h3>Output String:</h3>
 		<p>
-			<code>{"unix":1451001600000, "utc":"Fri, 25 Dec 2015 00:00:00 GMT"}</code>
+			<code id="code-insert">{"unix":1451001600000, "utc":"Fri, 25 Dec 2015 00:00:00 GMT"}</code>
       </p>
     </div>
     <div class="footer">
@@ -34,5 +34,6 @@
         By <a href="https://rolfkarlen.ch">rolfkarlen.ch</a>
       </p>
     </div>
+    <script src="./js/main.js"></script>
   </body>
 </html>

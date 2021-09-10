@@ -35,13 +35,20 @@ app.get("/", (req, res) => {
 })*/
 
 // your first API endpoint... 
-app.get("/api/:date?", (req, res) => {
-  //console.log(err);
-  //if(req.query.date)res.sendStatus(404);
-  if(req.query.date);
-  //console.log(req.query.format)
-  //console.log(dateChosen);
-  res.json({'firstLine': dateChosen});
+app.get("/api", (req, res) => {
+  const dateChosen = req.query.date;
+  console.log(dateChosen);
+  if(dateChosen !== ''){
+    const dateString = dateChosen+'T00:00:00';    
+    const dateEval = new Date(dateString);
+    const milSec = dateEval.getTime();
+    console.log(milSec);
+    const getJson = {unix: milSec};
+    console.log(getJson);
+    res.json(getJson)
+  } else{
+    res.status(404).statusText('Not Found');
+  }
 });
 
 app.get("/api/1451001600000", (req, res) => {
