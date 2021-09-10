@@ -1,11 +1,10 @@
 // server.js
 // where your node app starts
-const http = require('http');
+//const http = require('http');
 // init project
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const server = http.createServer(app);
 
 app.use(bodyParser.json()); 
 // Express modules / packages
@@ -26,10 +25,23 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+/*app.param('/api/:dateId', (req, res, next) =>{
+  console.log('------------------------------------------------------------------');
+  console.log('Request URL: ', req.query.dateId);
+  next();
+}, (req, res, next)=>{
+  console.log('Request Type: ', req.method);
+  next();
+})*/
 
 // your first API endpoint... 
 app.get("/api/:date?", (req, res) => {
-  res.json({});
+  //console.log(err);
+  //if(req.query.date)res.sendStatus(404);
+  if(req.query.date);
+  //console.log(req.query.format)
+  //console.log(dateChosen);
+  res.json({'firstLine': dateChosen});
 });
 
 app.get("/api/1451001600000", (req, res) => {
@@ -41,6 +53,6 @@ app.get("/api/2015-12-25", (req, res) => {
 
 
 // listen for requests :)
-const listener = server.listen(process.env.PORT, () => {
+const listener = app.listen(process.env.PORT, () => {
   console.log('Your app is listening on port ' + listener.address().port);
 });
