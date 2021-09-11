@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 })*/
 
 // your first API endpoint... 
-app.get("/api", (req, res) => {
+app.get("/api/:date?", (req, res) => {
   let getJson = '';
   const dateChosen = req.query.date;
   const arrayOfDate = dateChosen.split(':');
@@ -61,10 +61,12 @@ app.get("/api", (req, res) => {
       console.log(getJson);
       res.json(getJson);
     } else{
-      res.status(404).send('Not Found');
+      const err = new Error({error: "Invalid Date"});
+      res.status(404).send(err);
     }
   } else{
-    res.status(404).send('Not Found')
+      const err = new Error({error: "Invalid Date"});
+      res.status(404).send(err);
   }
 });
 

@@ -42,6 +42,7 @@ submitButton.addEventListener('click',(e)=>{
         console.log('res.ok')
         return res.json();
       } else{
+        console.log('res else: ',res)
         renderError(res);
       }
     }).then(res =>{
@@ -57,7 +58,7 @@ submitButton.addEventListener('click',(e)=>{
       }
     });
   } else{
-    codeInsert.innerHTML = 'Please, choose a date.'
+    codeInsert.innerHTML = '{error: "Invalid Date"}';
     console.log('No date chosen!')
   }
 });
