@@ -13,7 +13,7 @@ const renderError = response => {
 ${response.statusText}`;
 }
 let render = (form, formDate, sform, sformDate) => {
-    if(this.hasOwnProperty(sform))codeInsert.innerHTML = `{"${form}": "${formDate}"}`;
+    if(this.hasOwnProperty(sform))codeInsert.innerHTML = `{"${form}": ${formDate}}`;
     else if(!this.hasOwnProperty(sform))codeInsert.innerHTML = `{"${form}": ${formDate}, "${sform}": "${sformDate}"}`;
     else renderError('{error: "Invalid Date"}');
 }
