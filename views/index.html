@@ -15,8 +15,12 @@
 	<div class="container">
 		<h3>Get Date in UNIX or UTC:</h3>
     <form>
+      <label for="unix-radio" id="label-unix-radio">Unix in ms</label>
+      <input type="radio" name="radio-selection" id="unix-radio" class="radio-button" value="unix" checked>
+      <label for="unix-radio" id="label-unix-radio">UTC date</label>
+      <input type="radio" name="radio-selection" id="utc-radio" class="radio-button" value="utc"><br>
       <label for="input-date" id="label-date"></label>
-      <input type="date" name="date" id="input-date" required>
+      <input type="date" name="date" id="input-date">
       <input type="submit" value="Send" id="submit-button">
     </form>
 		<!--<ul>

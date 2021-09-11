@@ -36,18 +36,35 @@ app.get("/", (req, res) => {
 
 // your first API endpoint... 
 app.get("/api", (req, res) => {
+  let getJson = '';
   const dateChosen = req.query.date;
-  console.log(dateChosen);
-  if(dateChosen !== ''){
-    const dateString = dateChosen+'T00:00:00';    
-    const dateEval = new Date(dateString);
-    const milSec = dateEval.getTime();
-    console.log(milSec);
-    const getJson = {unix: milSec};
-    console.log(getJson);
-    res.json(getJson)
+  const arrayOfDate = dateChosen.split(':');
+  console.log(arrayOfDate);
+  const formOfDate = arrayOfDate[0];
+  const formOfType = arrayOfDate[1];
+  console.log(formOfDate);
+  if(formOfDate !== ''){
+    if(formOfType === 'unix'){
+      const dateUnixString = formOfDate+'T00:00:00';    
+      const dateUnixEval = new Date(dateUnixString);
+      console.log(dateUnixEval);
+      const milSec = dateUnixEval.getTime();
+      console.log(milSec);
+      getJson = {unix: milSec};
+      console.log(getJson);
+      res.json(getJson);
+    } else if(formOfType === 'utc'){
+      const dateUtcString = formOfDate+'T00:00:00';
+      const dateUtcEval = new Date(dateUtcString);
+      const dateTime = dateUtcEval.toString();
+      getJson = {utc: dateTime};
+      console.log(getJson);
+      res.json(getJson);
+    } else{
+      res.status(404).send('Not Found');
+    }
   } else{
-    res.status(404).statusText('Not Found');
+    res.status(404).send('Not Found')
   }
 });
 
