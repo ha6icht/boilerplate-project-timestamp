@@ -35,43 +35,50 @@ app.get("/", (req, res) => {
 })*/
 
 // your first API endpoint... 
-app.get("/api/:date?", (req, res) => {
-  let getJson = '';
-  const dateChosen = req.query.date;
-  const arrayOfDate = dateChosen.split(':');
-  console.log(arrayOfDate);
-  const formOfDate = arrayOfDate[0];
-  const formOfType = arrayOfDate[1];
-  console.log(formOfDate);
-  if(formOfDate !== ''){
-    if(formOfType === 'unix'){
-      const dateUnixString = formOfDate+'T00:00:00';    
-      const dateUnixEval = new Date(dateUnixString);
-      console.log(dateUnixEval);
-      const milSec = dateUnixEval.getTime();
-      console.log(milSec);
-      getJson = {unix: milSec};
-      console.log(getJson);
-      res.json(getJson);
-    } else if(formOfType === 'utc'){
-      const dateUtcString = formOfDate+'T00:00:00';
-      const dateUtcEval = new Date(dateUtcString);
-      const dateTime = dateUtcEval.toUTCString();
-      getJson = {utc: dateTime};
-      console.log(getJson);
-      res.json(getJson);
+app.get("/api/:date?", (req, res, next) => {
+  if(req.query.date){
+    const dateChosen = req.query.date;
+    const arrayOfDate = dateChosen.split(':');
+    console.log(arrayOfDate);
+    const formOfDate = arrayOfDate[0];
+    const formOfType = arrayOfDate[1];
+    console.log(formOfDate);
+    if(formOfDate !== ''){
+      if(formOfType === 'unix'){
+        const dateUnixString = formOfDate+'T00:00:00';    
+        const dateUnixEval = new Date(dateUnixString);
+        console.log(dateUnixEval);
+        const milSec = dateUnixEval.getTime();
+        console.log(milSec);
+        getJson = {unix: milSec};
+        console.log(getJson);
+        res.json(getJson);
+      } else if(formOfType === 'utc'){
+        const dateUtcString = formOfDate+'T00:00:00';
+        const dateUtcEval = new Date(dateUtcString);
+        const dateTime = dateUtcEval.toUTCString();
+        const getJson = {utc: dateTime};
+        console.log(getJson);
+        res.json(getJson);
+      } else{
+        const err = new Error({error: "Invalid Date"});
+        res.status(404).send(err);
+      }
     } else{
-      const err = new Error({error: "Invalid Date"});
-      res.status(404).send(err);
+        const err = new Error({error: "Invalid Date"});
+        res.status(404).send(err);
     }
   } else{
-      const err = new Error({error: "Invalid Date"});
-      res.status(404).send(err);
+    next();
   }
 });
 
-app.get("/api/1451001600000", (req, res) => {
-  res.json({greeting: 'hello API'});
+app.get("/api/1451001600000/", (req, res) => {
+  const timeStamp = 1451001600000;
+  const dateString = new Date(timeStamp);
+  const dateObject = dateString.toUTCString();
+  console.log(dateObject);
+  res.json({'unix': timeStamp, 'utc': dateObject});
 });
 app.get("/api/2015-12-25", (req, res) => {
   res.json({greeting: 'hello API'});

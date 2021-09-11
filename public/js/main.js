@@ -2,6 +2,7 @@ const submitButton = document.getElementById('submit-button');
 const inputDate = document.getElementById('input-date');
 const codeInsert = document.getElementById('code-insert');
 const radioButton = document.getElementsByClassName('radio-button')
+const submitButtonMs = document.getElementById('submit-button-ms');
 
 //const dateValue = inputDate.value;
 //console.log(dateValue);
@@ -11,8 +12,10 @@ const renderError = response => {
 <br>Code: ${response.status}<br>
 ${response.statusText}`;
 }
-let render = (form, milUnix) => {
-    codeInsert.innerHTML = `{${form}: ${milUnix}}`
+let render = (form, formDate, sform, sformDate) => {
+    if(this.hasOwnProperty(sform))codeInsert.innerHTML = `{"${form}": "${formDate}"}`;
+    else if(!this.hasOwnProperty(sform))codeInsert.innerHTML = `{"${form}": ${formDate}, "${sform}": "${sformDate}"}`;
+    else renderError('{error: "Invalid Date"}');
 }
 const myHeaders = new Headers();
 
@@ -32,7 +35,8 @@ submitButton.addEventListener('click',(e)=>{
   if(checked){
     const dateValue = inputDate.value+':'+radioValue;
     console.log(dateValue);
-    fetch(`/api?date=${dateValue}`,{
+    const url = `/api?date=${dateValue}`;
+    fetch(url,{
       method: 'GET',
       headers: myHeaders,
       mode: 'cors',
@@ -61,4 +65,27 @@ submitButton.addEventListener('click',(e)=>{
     codeInsert.innerHTML = '{error: "Invalid Date"}';
     console.log('No date chosen!')
   }
+});
+
+submitButtonMs.addEventListener('click', (e)=>{
+  const url = '/api/1451001600000/';
+  e.preventDefault();
+  fetch(url,{
+    method: 'GET',
+    headers: myHeaders,
+    mode: 'cors',
+    cache: 'default',
+  }).then(res =>{
+    if(res.ok){
+      console.log(res);
+      return res.json();
+    } else{
+      console.log(res);
+      console.log('renderError')
+      renderError(res);
+    }
+  }).then(res =>{
+    console.log('last .then');
+    render('unix', res.unix, 'utc', res.utc);
+  });
 });
