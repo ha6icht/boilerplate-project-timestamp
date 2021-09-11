@@ -45,13 +45,13 @@ submitButton.addEventListener('click',(e)=>{
         renderError(res);
       }
     }).then(res =>{
-      console.log(res.unix);
+      //console.log(res.unix);
       
-      if('unix' in Obj){
+      if('unix' in res){
         console.log('unix');
         render('unix', res.unix);
       }
-      else if('utc' in Obj){
+      else if('utc' in res){
         console.log('utc');
         render('utc', res.utc);
       }

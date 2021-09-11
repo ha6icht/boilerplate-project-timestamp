@@ -56,7 +56,7 @@ app.get("/api", (req, res) => {
     } else if(formOfType === 'utc'){
       const dateUtcString = formOfDate+'T00:00:00';
       const dateUtcEval = new Date(dateUtcString);
-      const dateTime = dateUtcEval.toString();
+      const dateTime = dateUtcEval.toUTCString();
       getJson = {utc: dateTime};
       console.log(getJson);
       res.json(getJson);
